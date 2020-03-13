@@ -6,7 +6,7 @@ The XML collection is dedicated to XML and allow you to control how a collection
 
 In this example, we configure the roles property.
 
-``` php
+```php
 namespace Acme;
 
 use Ivory\Serializer\Mapping\Annotation as Serializer;
@@ -14,13 +14,13 @@ use Ivory\Serializer\Mapping\Annotation as Serializer;
 class User
 {
     /**
-     * @Serializer\XmlCollection({
+     * @Serializer\XmlCollection(
      *     entry = "entry",
      *     entryAttribute = "key",
      *     keyAsNode = true,
      *     keyAsAttibute = false,
      *     inline = false
-     * })
+     * )
      *
      * @var string[]
      */
@@ -86,10 +86,10 @@ use Ivory\Serializer\Mapping\Annotation as Serializer;
 class User
 {
     /**
-     * @Serializer\XmlCollection({
+     * @Serializer\XmlCollection(
      *     entry = "role", 
      *     inline = true
-     * })
+     * )
      *
      * @var string[]
      */

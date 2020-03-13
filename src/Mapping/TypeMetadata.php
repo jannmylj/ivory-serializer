@@ -151,7 +151,7 @@ class TypeMetadata implements TypeMetadataInterface
 
         $options = $this->getOptions();
 
-        array_walk($options, function (&$value, $option) {
+        array_walk($options, static function (&$value, $option) {
             if (is_string($value)) {
                 $value = '\''.$value.'\'';
             }
