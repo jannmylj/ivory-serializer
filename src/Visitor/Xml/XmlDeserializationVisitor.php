@@ -35,9 +35,9 @@ class XmlDeserializationVisitor extends AbstractDeserializationVisitor
 
     /**
      * @param InstantiatorInterface $instantiator
-     * @param MutatorInterface      $mutator
-     * @param string                $entry
-     * @param string                $entryAttribute
+     * @param MutatorInterface $mutator
+     * @param string $entry
+     * @param string $entryAttribute
      */
     public function __construct(
         InstantiatorInterface $instantiator,
@@ -62,12 +62,12 @@ class XmlDeserializationVisitor extends AbstractDeserializationVisitor
         $this->setLibXmlState(true, true);
         $document = simplexml_load_string($data);
 
-        if ($document === false) {
+        if (false === $document) {
             $errors = [];
 
             foreach (libxml_get_errors() as $error) {
                 $errors[] = sprintf('[%s %s] %s (in %s - line %d, column %d)',
-                    $error->level === LIBXML_ERR_WARNING ? 'WARNING' : 'ERROR',
+                    LIBXML_ERR_WARNING === $error->level ? 'WARNING' : 'ERROR',
                     $error->code,
                     trim($error->message),
                     $error->file ?: 'n/a',
@@ -129,13 +129,13 @@ class XmlDeserializationVisitor extends AbstractDeserializationVisitor
             $result = $value;
             $isElement = $value instanceof \SimpleXMLElement;
 
-            if ($isElement && $valueType === null) {
+            if ($isElement && null === $valueType) {
                 $result = $this->visitNode($value, $entry);
             }
 
             $result = $this->navigator->navigate($result, $context, $valueType);
 
-            if ($result === null && $context->isNullIgnored()) {
+            if (null === $result && $context->isNullIgnored()) {
                 continue;
             }
 
@@ -143,14 +143,14 @@ class XmlDeserializationVisitor extends AbstractDeserializationVisitor
                 $key = null;
             }
 
-            if ($isElement && ($keyAsAttribute || $key === null)) {
+            if ($isElement && ($keyAsAttribute || null === $key)) {
                 $attributes = $value->attributes();
                 $key = isset($attributes[$entryAttribute]) ? $this->visitNode($attributes[$entryAttribute]) : null;
             }
 
             $key = $this->navigator->navigate($key, $context, $keyType);
 
-            if ($key === null) {
+            if (null === $key) {
                 $this->result[] = $result;
             } else {
                 $this->result[$key] = $result;
@@ -193,7 +193,7 @@ class XmlDeserializationVisitor extends AbstractDeserializationVisitor
 
         $data = $data->$key;
 
-        if ($data->count() === 1 && (string) $data === '') {
+        if ('' === $data) {
             return false;
         }
 
@@ -201,17 +201,16 @@ class XmlDeserializationVisitor extends AbstractDeserializationVisitor
     }
 
     /**
-     * @param \SimpleXMLElement $data
-     * @param string|null       $entry
+     * @param string|null $entry
      *
      * @return mixed
      */
     private function visitNode(\SimpleXMLElement $data, $entry = null)
     {
-        if ($data->count() === 0) {
+        if (0 === $data->count()) {
             $data = (string) $data;
 
-            return $data !== '' ? $data : null;
+            return '' !== $data ? $data : null;
         }
 
         $result = [];

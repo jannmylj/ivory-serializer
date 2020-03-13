@@ -13,13 +13,14 @@
         "php": "^5.6|^7.0",
         "doctrine/instantiator": "^1.0",
         "doctrine/lexer": "^1.0",
-        "symfony/options-resolver": "^2.7|^3.0"
+        "symfony/options-resolver": "^2.7|^3.0",
+        "ext-simplexml": "*",
+        "ext-json": "*",
+        "ext-dom": "*",
+        "ext-libxml": "*"
     },
     "require-dev": {
         "doctrine/annotations": "^1.2",
-        "ext-json": "*",
-        "ext-dom": "*",
-        "ext-simplexml": "*",
         "friendsofphp/php-cs-fixer": "^2.0",
         "nikic/php-parser": "^1.4",
         "phpdocumentor/reflection": "^3.0",
